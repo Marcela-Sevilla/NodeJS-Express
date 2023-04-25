@@ -125,3 +125,57 @@
 // }
 
 // miPromesa.then(manejarPromesaCumplida, manejarPromesaRechazada);
+
+// Async Await
+function ordenarProductos (productos){
+    return new Promise((resolve, reject)=>{
+        console.log(`Ordenando ${productos} de DolarCity`);
+        setTimeout(()=>{
+            if(productos === 'taza'){
+                resolve('Ordenando una taza de DolarCity');
+            }else{
+                reject('Este producto no esta disponible actualmente...');
+            }
+        }, 2000)
+    }) ;
+}
+
+function procesarPedidos (respuesta){
+    return new Promise(resolve=>{
+      console.log('Procesando el pedido...');
+      console.log(`La respuesta fue: "${respuesta}"`);
+      setTimeout(()=>{
+        resolve('Gracias por tu compra. Disfruta tu pedido!');
+      }, 4000);
+    });
+}
+
+// Sin Async Await
+// ordenarProductos('camisa')
+//   .then(respuesta =>{
+//     console.log('Respuesta recibida');
+//     console.log(respuesta);
+//     return procesarPedidos(respuesta);
+//   })
+//   .then(respuestaProcesada =>{
+//     console.log(respuestaProcesada);
+//   })
+//   .catch(error=>{
+//     throw error;
+//   });
+
+// Con Async Await 
+async function realizarPedido (producto){
+
+  try{
+    const respuesta = await ordenarProductos(producto);
+    console.log('Respuesta recibida');
+    console.log(respuesta);
+    const respuestaProcesada = await procesarPedidos(respuesta);
+    console.log(respuestaProcesada);
+  }catch(err){
+    console.log(err);
+  }
+  
+};
+realizarPedido('camisa');
